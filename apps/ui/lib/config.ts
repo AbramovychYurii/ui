@@ -11,6 +11,7 @@ export const appConfig = {
       href: "/particles",
       label: "Particles",
     },
+    { href: "/chat", label: "Chat UI" },
   ],
   ogImage: "https://coss.com/og.jpg",
   url: "https://coss.com/ui",
