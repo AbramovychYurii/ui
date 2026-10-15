@@ -1,6 +1,7 @@
 "use client";
 
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
+import { useDirection } from "@base-ui/react/direction-provider";
 import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer";
 import { mergeProps } from "@base-ui/react/merge-props";
 import { Radio as RadioPrimitive } from "@base-ui/react/radio";
@@ -30,6 +31,12 @@ const directionMap: Record<
   top: "up",
 };
 
+const rtlDirectionMap: typeof directionMap = {
+  ...directionMap,
+  left: "right",
+  right: "left",
+};
+
 export const DrawerCreateHandle: typeof DrawerPrimitive.createHandle =
   DrawerPrimitive.createHandle;
 
@@ -40,10 +47,14 @@ export function Drawer({
 }: DrawerPrimitive.Root.Props & {
   position?: DrawerPosition;
 }): React.ReactElement {
+  const direction = useDirection();
+  const defaultSwipeDirection =
+    direction === "rtl" ? rtlDirectionMap[position] : directionMap[position];
+
   return (
     <DrawerContext.Provider value={{ position }}>
       <DrawerPrimitive.Root
-        swipeDirection={swipeDirection ?? directionMap[position]}
+        swipeDirection={swipeDirection ?? defaultSwipeDirection}
         {...props}
       />
     </DrawerContext.Provider>
@@ -81,8 +92,8 @@ export function DrawerSwipeArea({
         "fixed z-50 touch-none",
         position === "bottom" && "inset-x-0 bottom-0 h-8",
         position === "top" && "inset-x-0 top-0 h-8",
-        position === "left" && "inset-y-0 left-0 w-8",
-        position === "right" && "inset-y-0 right-0 w-8",
+        position === "left" && "inset-y-0 start-0 w-8",
+        position === "right" && "inset-y-0 end-0 w-8",
         className,
       )}
       data-slot="drawer-swipe-area"
