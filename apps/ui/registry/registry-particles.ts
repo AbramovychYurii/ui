@@ -4203,7 +4203,6 @@ export const particles: ParticleItem[] = [
     files: [{ path: "particles/p-popover-4.tsx", type: "registry:block" }],
     name: "p-popover-4",
     registryDependencies: [
-      "@coss/badge",
       "@coss/button",
       "@coss/checkbox",
       "@coss/checkbox-group",
